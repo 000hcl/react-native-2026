@@ -3,7 +3,8 @@ const theme = {
     textPrimary: '#24292e',
     textSecondary: '#586069',
     primary: '#0366d6',
-    bg: '#e1e4e8'
+    bg: '#e1e4e8',
+    errorRed: '#d73a4a'
   },
   fontSizes: {
     body: 14,
