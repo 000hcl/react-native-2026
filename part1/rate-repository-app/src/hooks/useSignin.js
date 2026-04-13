@@ -9,9 +9,9 @@ const useSignIn = () => {
   const apolloClient = useApolloClient();
   const [mutate, result] = useMutation(SIGN_IN, {
     onCompleted: async (data) => {
-      //console.log(data)
+      //console.log(data.authenticate.accessToken)
       //console.log('auth', data.authenticate)
-      await authStorage.setAccessToken(data.authenticate)
+      await authStorage.setAccessToken(data.authenticate.accessToken)
       console.log('login complete')
       apolloClient.resetStore();
     },
