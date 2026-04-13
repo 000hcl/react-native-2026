@@ -4,6 +4,7 @@ import { TextInput, Pressable, View, StyleSheet } from 'react-native';
 import { useFormik } from 'formik';
 import theme from '../theme';
 import useSignIn from '../hooks/useSignin';
+import AuthStorage from '../utils/authStorage';
 
 const styles = StyleSheet.create({
   bigBox: {
@@ -110,8 +111,12 @@ const SignIn = () => {
     
     try {
       const { data } = await signIn({ username, password });
+      const storage = new AuthStorage('token');
+      await storage.setAccessToken(data.authenticate);
+      const token = await storage.getAccessToken();
 
-      console.log('on signin.jsx', data)
+
+      console.log('on signin.jsx', data, 'token: ', token)
     } catch (e) {
       console.log(e);
     }
@@ -120,3 +125,21 @@ const SignIn = () => {
 };
 
 export default SignIn;
+
+// const doShopping = async () => {
+//   const shoppingCartA = new ShoppingCartStorage('shoppingCartA');
+//   const shoppingCartB = new ShoppingCartStorage('shoppingCartB');
+
+//   await shoppingCartA.addProduct('chips');
+//   await shoppingCartA.addProduct('soda');
+
+//   await shoppingCartB.addProduct('milk');
+
+//   const productsA = await shoppingCartA.getProducts();
+//   const productsB = await shoppingCartB.getProducts();
+
+//   console.log(productsA, productsB);
+
+//   await shoppingCartA.clearProducts();
+//   await shoppingCartB.clearProducts();
+// };
