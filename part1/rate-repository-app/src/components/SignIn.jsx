@@ -2,9 +2,9 @@ import * as yup from 'yup';
 import Text from './Text';
 import { TextInput, Pressable, View, StyleSheet } from 'react-native';
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router';
 import theme from '../theme';
 import useSignIn from '../hooks/useSignin';
-import AuthStorage from '../utils/authStorage';
 
 const styles = StyleSheet.create({
   bigBox: {
@@ -106,17 +106,15 @@ const SignInForm = ({ onSubmit }) => {
 
 const SignIn = () => {
   const [signIn] = useSignIn();
+  const navigate = useNavigate();
   const onSubmit = async (values) => {
     const { username, password } = values;
     
     try {
       const { data } = await signIn({ username, password });
-      const storage = new AuthStorage('token');
-      await storage.setAccessToken(data.authenticate);
-      const token = await storage.getAccessToken();
+      navigate('/')
 
-
-      console.log('on signin.jsx', data, 'token: ', token)
+      console.log('on signin.jsx', data)
     } catch (e) {
       console.log(e);
     }
@@ -125,21 +123,3 @@ const SignIn = () => {
 };
 
 export default SignIn;
-
-// const doShopping = async () => {
-//   const shoppingCartA = new ShoppingCartStorage('shoppingCartA');
-//   const shoppingCartB = new ShoppingCartStorage('shoppingCartB');
-
-//   await shoppingCartA.addProduct('chips');
-//   await shoppingCartA.addProduct('soda');
-
-//   await shoppingCartB.addProduct('milk');
-
-//   const productsA = await shoppingCartA.getProducts();
-//   const productsB = await shoppingCartB.getProducts();
-
-//   console.log(productsA, productsB);
-
-//   await shoppingCartA.clearProducts();
-//   await shoppingCartB.clearProducts();
-// };
