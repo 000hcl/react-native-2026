@@ -66,7 +66,7 @@ const StatBox = ({text, count}) => {
 const RepositoryItem = ({item}) => {
 
   return(
-    <View style={styles.bigBox}>
+    <View testID="repositoryItem" style={styles.bigBox}>
       <View style={styles.usercontainer}>
         <Image source={{uri: item.ownerAvatarUrl}} style={styles.logo}/>
         <View style={styles.topInfo}>
