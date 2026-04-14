@@ -58,11 +58,8 @@ const validationSchema = yup.object().shape({
     .string().required()
 })
 
-//  {formik.touched.mass && formik.errors.mass && (
-//   <Text style={{ color: 'red' }}>{formik.errors.mass}</Text>
-//  )}
 
-const SignInForm = ({ onSubmit }) => {
+export const SignInForm = ({ onSubmit }) => {
   const formik = useFormik({
     initialValues,
     validationSchema,
