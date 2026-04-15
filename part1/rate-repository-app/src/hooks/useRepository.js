@@ -5,12 +5,8 @@ import { useParams } from "react-router-native";
 
 const useRepository = () => {
   const { id } = useParams();
-  console.log('params:', id);
-  
+
   const [repository, setRepository] = useState();
-  console.log('id @useRepository', id);
-  console.log('type of id is', typeof id)
-  
 
   const { data, error, loading } = useQuery(REPO_BY_ID, {variables: { id:id },fetchPolicy: 'cache-and-network'});
   if (error) {
@@ -19,8 +15,6 @@ const useRepository = () => {
   };
   useEffect(() => {
     if (data) {
-      console.log('data:', data);
-      
       setRepository(data.repository)
     }
   }, [data]);

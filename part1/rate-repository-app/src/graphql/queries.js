@@ -49,6 +49,20 @@ export const REPO_BY_ID = gql`
       forksCount
       description
       url
+      reviews {
+      edges {
+          node {
+            id
+            rating
+            text
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
     }
   }
 `
