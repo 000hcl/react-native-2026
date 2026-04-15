@@ -1,4 +1,5 @@
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, Pressable } from "react-native";
+import { openURL } from "expo-linking";
 import Text from "./Text";
 import theme from "../theme";
 
@@ -36,6 +37,13 @@ const styles = StyleSheet.create({
   },
   statBox: {
     alignItems: 'center'
+  },
+  urlButton: {
+    backgroundColor: theme.colors.primary,
+    padding: 20,
+    borderRadius: 7,
+    marginTop: 5,
+    alignItems: 'center'
   }
 });
 
@@ -52,8 +60,6 @@ const format = (num) => {
 
 
 const StatBox = ({text, count}) => {
-  // console.log(format(count));
-  
   return (
     <View style={styles.statBox}>
       <Text fontWeight={'bold'} >{format(count)}</Text>
@@ -63,7 +69,7 @@ const StatBox = ({text, count}) => {
   )
 }
 
-const RepositoryItem = ({item}) => {
+const RepositoryItem = ({item, isSingle=false}) => {
 
   return(
     <View testID="repositoryItem" style={styles.bigBox}>
@@ -87,6 +93,17 @@ const RepositoryItem = ({item}) => {
         <StatBox text={'Reviews'} count={item.reviewCount}/>
         <StatBox text={'Rating'} count={item.ratingAverage}/>
       </View>
+      { isSingle && (
+        <Pressable onPress={() => openURL(item.url)}>
+          <View style={styles.urlButton}>
+            <Text color={'white'} fontWeight={'bold'}>Open in GitHub</Text>
+          </View>
+        </Pressable>
+
+      )
+
+      }
+
 
     </View>
   )
