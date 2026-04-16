@@ -7,6 +7,7 @@ import useAuthStorage from '../hooks/useAuthStorage';
 import { useApolloClient } from "@apollo/client";
 import { useQuery } from '@apollo/client/react';
 import { ME } from '../graphql/queries';
+import { useNavigate } from 'react-router-native';
 
 
 const styles = StyleSheet.create({
@@ -40,12 +41,14 @@ const Tab = ({text, link}) => {
 }
 
 const SignOut = () => {
+  const navigate = useNavigate();
   const authStorage = useAuthStorage();
   const apolloClient = useApolloClient();
   const onPress = async () => {
     try {
       await authStorage.removeAccessToken();
       await apolloClient.resetStore();
+      navigate('/');
     } catch (e) {
       console.log('signout',e)
     }
@@ -58,13 +61,9 @@ const SignOut = () => {
   )
 }
 
-const SignInOrOut = () => {
-  const { data, loading, error } = useQuery(ME, {
-    fetchPolicy: 'cache-and-network',
-  });
-  console.log(data, loading, error);
-  
-  if (data?.me) {
+const SignInOrOut = ({login}) => {
+  console.log('login is ss',login)
+  if (login) {
     return <SignOut/>
   } else {
     return <Tab link={'/signin'} text={'Sign in'}/>
@@ -72,11 +71,21 @@ const SignInOrOut = () => {
 }
 
 const AppBar = () => {
+  const { data, loading, error } = useQuery(ME, {
+    fetchPolicy: 'cache-and-network',
+  });
+  console.log(data, loading, error);
+  const login = !(data?.me===null)
+  console.log('login is',login)
   return (
   <View style={styles.container}>
     <ScrollView horizontal style={styles.scroll}>
       <Tab link={'/'} text={'Repositories'}/>
-      <SignInOrOut />
+      {login && (
+        <Tab link={'/createreview'} text={'Create Review'}/>
+      )}
+      <SignInOrOut login={login}/>
+      
     </ScrollView>
 
   </View>);

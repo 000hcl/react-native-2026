@@ -12,10 +12,10 @@ const useSignIn = () => {
       //console.log(data.authenticate.accessToken)
       //console.log('auth', data.authenticate)
       await authStorage.setAccessToken(data.authenticate.accessToken)
-      console.log('login complete')
       apolloClient.resetStore();
     },
     onError: (error) => {
+        // eslint-disable-next-line no-undef
         console.log('error',error);
     }
   });

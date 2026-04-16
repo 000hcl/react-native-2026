@@ -66,3 +66,14 @@ export const REPO_BY_ID = gql`
     }
   }
 `
+
+export const CREATE_REVIEW = gql`
+  mutation CreateReview($review: CreateReviewInput) {
+    createReview(review: $review) {
+      repository {
+        id
+      }
+    }
+  }
+
+`
