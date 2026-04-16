@@ -28,10 +28,23 @@ export const SIGN_IN = gql`
 }
 `
 export const ME = gql`
-  query {
+  query ($includeReviews: Boolean = false){
     me {
       id
       username
+      reviews @include(if: $includeReviews){
+        edges {
+          node {
+            id
+            rating
+            text
+            createdAt
+            repository {
+              fullName
+            }
+          }
+        }
+      }
     }
   }
 `

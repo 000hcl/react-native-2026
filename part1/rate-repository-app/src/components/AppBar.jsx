@@ -46,9 +46,10 @@ const SignOut = () => {
   const apolloClient = useApolloClient();
   const onPress = async () => {
     try {
+      navigate('/');
       await authStorage.removeAccessToken();
       await apolloClient.resetStore();
-      navigate('/');
+      
     } catch (e) {
       console.log('signout',e)
     }
@@ -83,6 +84,9 @@ const AppBar = () => {
       <Tab link={'/'} text={'Repositories'}/>
       {login && (
         <Tab link={'/createreview'} text={'Create Review'}/>
+      )}
+      {login && (
+        <Tab link={'/myreviews'} text={'My reviews'}/>
       )}
       <SignInOrOut login={login}/>
       {!login && (
