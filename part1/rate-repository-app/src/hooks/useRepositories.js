@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client/react';
 import { GET_REPOSITORIES } from '../graphql/queries';
 
-//CREATED_AT, RATING_AVERAGE, ASC, DESC
-const useRepositories = (sortState) => {
+const useRepositories = (sortState, filterState) => {
   const [repositories, setRepositories] = useState();
   const [orderBy, setOrderBy] = useState('CREATED_AT');
   const [orderDirection, setOrderDirection] = useState('DESC')
+
   const changeSorting = () => {
     switch (sortState) {
       case ('highest'):
@@ -24,9 +24,7 @@ const useRepositories = (sortState) => {
     }
   }
 
-
-
-  const { data, error, loading } = useQuery(GET_REPOSITORIES, {variables: {orderBy: orderBy, orderDirection: orderDirection }});
+  const { data, error, loading } = useQuery(GET_REPOSITORIES, {variables: {orderBy: orderBy, orderDirection: orderDirection, searchKeyword:filterState }});
   
   if (error) {
     // eslint-disable-next-line no-undef
@@ -37,7 +35,7 @@ const useRepositories = (sortState) => {
       changeSorting();
       setRepositories(data.repositories);
     }
-  }, [data, sortState]);
+  }, [data, sortState, filterState]);
 
 
   return { repositories, loading };
