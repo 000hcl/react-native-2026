@@ -85,7 +85,9 @@ const AppBar = () => {
         <Tab link={'/createreview'} text={'Create Review'}/>
       )}
       <SignInOrOut login={login}/>
-      
+      {!login && (
+        <Tab link={'/signup'} text={'Sign up'}/>
+      )}
     </ScrollView>
 
   </View>);
